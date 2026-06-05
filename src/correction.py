@@ -51,7 +51,7 @@ def ransac_line_fit(axis_data, n_iter=2000, threshold=0.05, min_inliers=None):
     inlier_points = data_xyz[best_inliers]
     centroid, direction = fit_line_pca(inlier_points)
 
-    t = np.linspace(-0.5, 0.5, 60)
+    t = np.linspace(-0.8, 0.8, 60)
     line = centroid + t[:, None] * direction
 
     return centroid, direction, inlier_points, best_inliers, line
@@ -129,13 +129,14 @@ def choose_candidates_smooth(
 
 
 
-def correction_algorithm(results, n_iter=2000, threshold=0.05, min_inliers=None):
+def correction_algorithm(results_path, sim, n_iter=2000, threshold=0.05, min_inliers=None):
+    results = load_results(results_path, sim)
     axis_data = convert_best_match_to_orientations(results).to_axes_angles()
 
-    centroid, direction, inliers, inlier_mask, line = ransac_line_fit(axis_data, n_iter=n_iter, threshold=threshold, min_inliers=min_inliers)
+    centroid, direction, inliers, inlier_mask, line = ransac_line_fit(axis_data, n_iter, threshold, min_inliers)
     best_match = choose_candidates_smooth(axis_data, centroid, direction, inliers, inlier_mask)
 
-    corrected_results = copy.deepcopy(results)
+    corrected_results = load_results(results_path, sim)
     correction_indices = np.where(~inlier_mask)[0]
 
     for idx, match in enumerate(correction_indices):

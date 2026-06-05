@@ -22,7 +22,6 @@ def center_beam_position(hsdata, sigma=5, hsw=10):
 def ROI_selection(hsdata):
     area_I_ROI = hs.roi.RectangularROI(left=0, top=0, right=10, bottom=10)
     area_II_ROI = hs.roi.RectangularROI(left=0, top=10, right=10, bottom=20)
-
     hsdata.plot()
 
     area_I = area_I_ROI.interactive(hsdata)

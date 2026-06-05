@@ -24,10 +24,11 @@ def convert_best_match_to_orientations(tilt_array):
     orientation_array = np.empty(len(tilt_array), dtype=object)
 
     for i, item in enumerate(tilt_array):
-        orientation_array[i] = item.orientations[0, 0, 0]
+        orientation_array[i] = item.orientations[0, 0]
     
     quaternion_array = np.stack([j.data for j in orientation_array])
     orientation_array = orix.quaternion.Orientation(quaternion_array, symmetry=tilt_array[0].sim.phase.point_group)
+    
     return orientation_array
 
 def line_to_orientations(line, symmetry):

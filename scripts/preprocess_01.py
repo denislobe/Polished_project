@@ -36,7 +36,7 @@ def run_preprocessing(input_path, output_path, tilt_number, sigma, hsw, disk_rad
 
 
 def Al_preprocess():
-    input_path = Path("D:\\Datasets\\aluminium_tilt_series\\SPED_tilt_series")
+    input_path = Path("D:\\Datasets\\aluminium_tilt_series\\uncalibrated")
     output_path = Path("D:\\Datasets\\aluminium_tilt_series\\preprocessed")
     tilt_number = 55
     sigma = 5
